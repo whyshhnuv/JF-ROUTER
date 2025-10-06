@@ -1,7 +1,7 @@
 # JF CUSTOMIZATIONS
 TIPS, TRICKS AND HACKS FOR JF ROUTERS <br />
 This repository contains all the files and instructions to customize your JF ONT Gateway. You can find instructions for miscellaneous customizations below. <br />
-All instructions are tested on JCOW404 <br/>
+All instructions are tested on JCOW404 and JCOW411 <br/>
 # Instuctions:-
 
 1.[Decrypt Config file](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Decrypt%20Config%20File.md)
@@ -17,3 +17,5 @@ All instructions are tested on JCOW404 <br/>
 6.[Downgrade Firmware (At Your Own Risk)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Downgrade%20Firmware.md) 
 
 7.[Enable FTP Server with / as FTP Root](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Enable%20Root%20FTP%20JF%20Router.md)
+
+8. [Run NEXT DNS on Router]()
