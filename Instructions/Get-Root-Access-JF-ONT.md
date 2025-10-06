@@ -2,7 +2,7 @@
 
 *Disclaimer: - This is Only for educational purposes, No one is responsible for any type of damage. Any wrong step might brick your router. So be aware.*
 
-1. First of all, follow [this guide](https://github.com/JFC-Group/JF-Customisation/blob/master/Instructions/Decrypt-Router-Configuration-File.md) to get the router decrypted configuration file `RSTXXXXXXX_JCXXXXX.txt`
+1. First of all, follow [this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Decrypt-Router-Configuration-File.md) to get the router decrypted configuration file `RSTXXXXXXX_JCXXXXX.txt`
 
 2. Open `RSTXXXXXXX_JCXXXXX.txt` with Notepad or other Text Editor.
 
