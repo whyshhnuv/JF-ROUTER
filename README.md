@@ -19,3 +19,5 @@ All instructions are tested on JCOW404 and JCOW411 <br/>
 7.[Enable FTP Server with / as FTP Root](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Enable%20Root%20FTP%20JF%20Router.md)
 
 8.[Run NextDNS (Adblocker) on Router](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20NextDNS.md)
+
+More Instructions Coming Soon!
