@@ -1,4 +1,4 @@
-# Decrypt Configuration File (Does not work anymore)
+# Get Configuration File
 
 *Disclaimer: - This is Only for educational purposes, No one is responsible for any type of damage.*
 
