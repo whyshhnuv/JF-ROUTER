@@ -1,5 +1,5 @@
-# Disable TR-069
-
+# Disable TR-069 [Does Not Work On New Firmwares] </br>
+Any Firmware After 2021 is fully dependent on TR069 for essential services like dimclient. Don't disable Tr069 on them or your router will be bricked.
 *Disclaimer: - This is Only for educational purposes, No one is responsible for any type of damage.*
 
 **NOTE : JioCall/Landline/JioSTB/Firmware Auto Update/Changing WiFi settings from MyJio or JioHome apps won't work if TR-069 is disabled.**
