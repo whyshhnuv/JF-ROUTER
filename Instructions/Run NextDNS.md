@@ -1,6 +1,6 @@
 To Run NextDNS on your Router.
 
-An account is recommended on [NextDNS](https://my.nextdns.io webpage) for this guide
+An account is recommended on [NextDNS](https://my.nextdns.io) webpage for this guide
 
 1. Download NextDNS binary from Release section or compile it yourself for your router.
 
