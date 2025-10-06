@@ -20,7 +20,7 @@ FOR NEW FIRMWARES LIKE JCOW404 3.10 OR 3.10.2 Try below command if above doesn't
 
 5. Ensure there is no line break in the line you just pasted. The whole content should be in a single line and the line should start with `config` otherwise this isn't gonna work.
 
-6. Follow **from step 6** mentioned in [this guide](https://github.com/JFC-Group/JF-Customisation/blob/master/Instructions/Encrypt-Router-Configuration-File.md) to re-encrypt the configuration file and restore it via the router admin panel. (You have to skip from step 1 to 5 in that guide otherwise your router may reset or restart and you will not have root).
+6. Follow[this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Encrypt-Router-Configuration-File.md) to re-encrypt the configuration file and restore it via the router admin panel.
 
 7. Connect your router via Telnet at port 23 with `root` as user name and `password` as password.
 
