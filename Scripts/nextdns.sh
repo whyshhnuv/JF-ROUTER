@@ -12,7 +12,7 @@
 # init process, making it a true daemon immune to login/logout.
 (
   # The exact command that works for you
-  NEXTDNS_COMMAND="/flash/nextdns run -profile be1c1e"
+  NEXTDNS_COMMAND="/flash/nextdns run -profile "
   PID_FILE="/var/run/nextdns.pid"
 
   # The infinite supervisor loop
