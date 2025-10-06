@@ -10,7 +10,7 @@ All instructions are tested on JCOW404 <br/>
 
 3.[Disable TR-069 [Does Not Work On New Firmwares]](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Disable%20TR-069.md)
 
-4.[Get Root Access (via Telnethttps://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT.md)
+4.[Get Root Access (via Telnet)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT.md)
 
 5.[Way to get any file directly from your Jio Router's Filesystem to your pendrive](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Way%20to%20get%20any%20file%20directly%20from%20your%20Jio%20Router's%20Filesystem%20to%20your%20pendrive.md) [Working as of 3rd January 2023] <br />
 
