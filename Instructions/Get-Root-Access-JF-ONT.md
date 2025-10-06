@@ -27,4 +27,5 @@ FOR NEW FIRMWARES LIKE JCOW404 3.10 OR 3.10.2 Try below command if above doesn't
 8. For newer firmwares, use command `rm /flash/telnetDisable` to keep Telnet enabled. (Otherwise it will be disabled after some time).
 Otherwise, on older firmwares use command `touch /tmp/DEBUG_IMAGE` to keep Telnet enabled. (Otherwise it will be disabled after some time).
 
+9.Bonus Tip: To keep telnet enabled use [this script](https://github.com/Naitik1208/JF-ROUTER/blob/main/Scripts/service.sh#L20) Store it on your router and add it to the rcS file as mentioned in [this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md).
 **Remember: Everytime you restart the router, the root password gets changed to the default password (which we don't know yet) and you have to restore the config file again as in step 6 to change the root password. Step 8 will keep your telnet enabled across router restarts.**
