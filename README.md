@@ -8,7 +8,7 @@ All instructions are tested on JCOW404 <br/>
 
 2.[RUN CUSTOM SCRIPTS ON JIO ROUTER](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md)
 
-3.[Disable TR-069](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Disable%20TR-069.md)
+3.[Disable TR-069 [Does Not Work On New Firmwares]](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Disable%20TR-069.md)
 
 4.[Get Root Access (via Telnet)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT-Home-Gateway.md)
 
