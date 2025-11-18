@@ -10,11 +10,6 @@ Any Firmware After 2021 is fully dependent on TR069 for essential services like 
 
 3.Go to the file `/flash/teamf1.cfg.ascii`, `/flash/teamf1.cfg.ascii.bkp` and change following values.
 
-4.**Find** the line 
-`config.tr69["ManagementServer"][1]["URL"] = "https://acs.oss.jio.com:8443/ftacs-digest/ACS"`
-and **replace** it with
-`config.tr69["ManagementServer"][1]["URL"] = "http://127.0.0.1"`
-
 5. **Find** the line
 `config.tr69["ManagementServer"][1]["tr69Status"] = "1"`
 and **replace** it with
