@@ -6,7 +6,7 @@ Any Firmware After 2021 is fully dependent on TR069 for essential services like 
 
 2.Start telnet on your router ip `192.168.1.1` or `192.168.29.1`
 
-3. Download [this file]()
+3. Download [this file](https://github.com/Naitik1208/JF-ROUTER/blob/main/Scripts/dimclient)
 
 4. Make directory /scripts or just copy that file directly after deleting actual dimclient or you may backup and rename original and use the file I made.
 
