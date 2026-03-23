@@ -33,8 +33,9 @@
 
 5. Use command `vsftpd /flash/vsftpd.conf &` to start the FTP server.
 
-6. Use command `iptables -I fwInBypass -p tcp --dport 21 -m ifgroup --ifgroup-in 0x1/0x1 -j ACCEPT` to enable listening to port 21.
+6. Use command `iptables -I fwInBypass -p tcp --dport 21 -m ifgroup --ifgroup-in 0x1/0x1 -j ACCEPT` to enable listening to port 21. </br>
+7. [Here is automation ftp script]()
 
-7. Connect your router using FTP client like FileZilla using `root` as username and your root password as the password.
+8. Connect your router using FTP client like FileZilla using `root` as username and your root password as the password.
 
 _**P.S. : You can also make a `.sh` script in `/flash/` or `/flash2/` to automate this process.**_
