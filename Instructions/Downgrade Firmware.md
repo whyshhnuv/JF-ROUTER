@@ -1,7 +1,7 @@
 # DOWNGRADE FIRMWARE
 NOTE:-This is only for educational purposes. 
 If your router is bricked or don't work then I am not responsible for it. 
-Successfully tested on multiple JCOW404. <br/>
+Successfully tested on multiple JCOW404 and JCOW411. <br/>
 1. Get Root Access using [this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT.md) <br/>
 2. Download firmware from [here](https://github.com/Naitik1208/JF-ROUTER/tree/main/Firmware)<br/>
 3. Upload firmware and sig file on maintenance --> firmware upgrade page.<br/>
