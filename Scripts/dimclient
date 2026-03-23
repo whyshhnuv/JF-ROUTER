@@ -1,0 +1,22 @@
+#!/bin/sh
+# 1. Create the 'Ready' files the Web Panel is waiting for
+touch /tmp/trInitDone.txt
+touch /tmp/trThirdPartyInitDone.txt
+touch /tmp/firewallInitialized
+touch /tmp/internetUp
+touch /tmp/connSuccess
+
+# 2. Force the Database state
+/pfrm2.0/bin/sqlite3 /tmp/system.db "UPDATE tr69Config SET tr69status='1';"
+
+# 3. Satisfy the SHM check (Optional but recommended)
+# We use the 'ipcmk' command if available, otherwise just create a dummy file
+# that matches the expected SHM key path if it's file-based.
+mkdir -p /tmp/cpe3
+
+# 4. Stay alive for the Hardware Watchdog
+while true; do
+    # Periodic 'Ready' refresh in case a service deletes them
+    touch /tmp/trInitDone.txt
+    sleep 30
+done

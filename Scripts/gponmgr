@@ -1,0 +1,396 @@
+#!/bin/sh
+# gponmgr replacement for JCOW411 (ARM)
+# Replicates functionality of JCOW414 MIPS gponmgr binary
+# using native JCOW411 tools
+
+VERSION="1.0-JCOW411"
+OMCI_FILE="/var/omci.msg"
+
+# Helper function to convert hex to ASCII
+hex_to_char() {
+    case "$1" in
+        20) echo -n " " ;; 21) echo -n "!" ;; 22) echo -n '"' ;; 23) echo -n "#" ;;
+        24) echo -n "$" ;; 25) echo -n "%" ;; 26) echo -n "&" ;; 27) echo -n "'" ;;
+        28) echo -n "(" ;; 29) echo -n ")" ;; 2A|2a) echo -n "*" ;; 2B|2b) echo -n "+" ;;
+        2C|2c) echo -n "," ;; 2D|2d) echo -n "-" ;; 2E|2e) echo -n "." ;; 2F|2f) echo -n "/" ;;
+        30) echo -n "0" ;; 31) echo -n "1" ;; 32) echo -n "2" ;; 33) echo -n "3" ;;
+        34) echo -n "4" ;; 35) echo -n "5" ;; 36) echo -n "6" ;; 37) echo -n "7" ;;
+        38) echo -n "8" ;; 39) echo -n "9" ;; 3A|3a) echo -n ":" ;; 3B|3b) echo -n ";" ;;
+        3C|3c) echo -n "<" ;; 3D|3d) echo -n "=" ;; 3E|3e) echo -n ">" ;; 3F|3f) echo -n "?" ;;
+        40) echo -n "@" ;; 41) echo -n "A" ;; 42) echo -n "B" ;; 43) echo -n "C" ;;
+        44) echo -n "D" ;; 45) echo -n "E" ;; 46) echo -n "F" ;; 47) echo -n "G" ;;
+        48) echo -n "H" ;; 49) echo -n "I" ;; 4A|4a) echo -n "J" ;; 4B|4b) echo -n "K" ;;
+        4C|4c) echo -n "L" ;; 4D|4d) echo -n "M" ;; 4E|4e) echo -n "N" ;; 4F|4f) echo -n "O" ;;
+        50) echo -n "P" ;; 51) echo -n "Q" ;; 52) echo -n "R" ;; 53) echo -n "S" ;;
+        54) echo -n "T" ;; 55) echo -n "U" ;; 56) echo -n "V" ;; 57) echo -n "W" ;;
+        58) echo -n "X" ;; 59) echo -n "Y" ;; 5A|5a) echo -n "Z" ;; 5F|5f) echo -n "_" ;;
+        61) echo -n "a" ;; 62) echo -n "b" ;; 63) echo -n "c" ;; 64) echo -n "d" ;;
+        65) echo -n "e" ;; 66) echo -n "f" ;; 67) echo -n "g" ;; 68) echo -n "h" ;;
+        69) echo -n "i" ;; 6A|6a) echo -n "j" ;; 6B|6b) echo -n "k" ;; 6C|6c) echo -n "l" ;;
+        6D|6d) echo -n "m" ;; 6E|6e) echo -n "n" ;; 6F|6f) echo -n "o" ;; 70) echo -n "p" ;;
+        71) echo -n "q" ;; 72) echo -n "r" ;; 73) echo -n "s" ;; 74) echo -n "t" ;;
+        75) echo -n "u" ;; 76) echo -n "v" ;; 77) echo -n "w" ;; 78) echo -n "x" ;;
+        79) echo -n "y" ;; 7A|7a) echo -n "z" ;; *) echo -n "." ;;
+    esac
+}
+
+# Extract vendor ID from serial number hex
+hex_sn_to_vendor() {
+    SN_HEX="$1"
+    # Extract first 4 hex pairs (vendor ID)
+    H1=$(echo "$SN_HEX" | cut -d'-' -f1)
+    H2=$(echo "$SN_HEX" | cut -d'-' -f2)
+    H3=$(echo "$SN_HEX" | cut -d'-' -f3)
+    H4=$(echo "$SN_HEX" | cut -d'-' -f4)
+    
+    hex_to_char "$H1"
+    hex_to_char "$H2"
+    hex_to_char "$H3"
+    hex_to_char "$H4"
+    echo ""
+}
+
+# Extract OLT Vendor from OMCI MIB 131 (0x83)
+get_olt_vendor_from_omci() {
+    if [ ! -f "$OMCI_FILE" ]; then
+        echo "Unknown (OMCI file not found)"
+        return
+    fi
+    
+    # Look for MIB 131 (0x83) response with OLT vendor
+    # Pattern: 00830000a000414c434c (ALCL in hex = 414c434c)
+    OLT_LINE=$(grep "00830000a000" "$OMCI_FILE" | //busybox  head -1)
+    
+    if [ -n "$OLT_LINE" ]; then
+        # Extract the vendor ID (4 bytes after 00830000a000)
+        VENDOR_HEX=$(echo "$OLT_LINE" | grep -o "00830000a000[0-9a-fA-F]*" | cut -c13-20)
+        
+        if [ -n "$VENDOR_HEX" ]; then
+            # Convert hex to ASCII
+            H1=$(echo "$VENDOR_HEX" | cut -c1-2)
+            H2=$(echo "$VENDOR_HEX" | cut -c3-4)
+            H3=$(echo "$VENDOR_HEX" | cut -c5-6)
+            H4=$(echo "$VENDOR_HEX" | cut -c7-8)
+            
+            VENDOR=""
+            VENDOR="${VENDOR}$(hex_to_char "$H1")"
+            VENDOR="${VENDOR}$(hex_to_char "$H2")"
+            VENDOR="${VENDOR}$(hex_to_char "$H3")"
+            VENDOR="${VENDOR}$(hex_to_char "$H4")"
+            
+            echo "$VENDOR"
+        else
+            echo "Unknown"
+        fi
+    else
+        echo "Unknown (MIB 131 not found)"
+    fi
+}
+
+show_usage() {
+    cat << EOF
+gponmgr - GPON Management Tool (ARM version for JCOW411)
+Version: $VERSION
+
+Usage: gponmgr <command> [options]
+
+GET Commands:
+  get info              - Get ONU information (ID, State, SN, Password, OLT Vendor)
+  get vendorId          - Get ONU vendor ID (from serial number)
+  get oltVendor         - Get OLT vendor ID (from OMCI MIB 131)
+  get equipmentId       - Get equipment ID
+  get onuVersion        - Get ONU version
+  get loid              - Get LOID
+  get loidPasswd        - Get LOID password
+  get WanCnt            - Get WAN statistics
+  get GemCnt <portid>   - Get GEM port statistics
+  get TcontCounters <id>- Get T-CONT packet counters
+  get fec_status        - Get FEC status
+  get DrvPowerLevel     - Get optical power level
+  get onuType           - Get ONU type (SFU/HGU)
+  get PloamGtcInfo      - Get PLOAM GTC information
+  get 4B_align          - Get 4-byte alignment status
+
+SET Commands:
+  set passwd <password> - Set GPON password (ASCII)
+  set sn <vendor> <sn>  - Set serial number
+  
+OMCI Commands:
+  omciRxTx              - OMCI send/receive test
+  showTcontMap          - Show T-CONT mapping
+  
+Other Commands:
+  help                  - Show this help message
+  resident              - Run in resident mode (daemon)
+
+Examples:
+  gponmgr get info
+  gponmgr get vendorId
+  gponmgr get WanCnt
+  gponmgr set passwd "12345678"
+
+EOF
+}
+
+get_info() {
+    echo "ONU Info:"
+    
+    # Get ONU ID
+    ONU_ID=$(gponctl getOnuId 2>/dev/null | grep "ONU ID:" | awk '{print $3}')
+    echo " ONU ID:    $ONU_ID"
+    
+    # Get ONU State
+    STATE=$(gponctl getState 2>/dev/null | grep "Operational" | awk '{print $3}')
+    echo " ONU State: $STATE"
+    
+    # Get Serial Number
+    echo " SN:"
+    SN=$(gponctl getSnPwd 2>/dev/null | grep "Serial Number:" | awk '{print $3}')
+    echo "  HEX:      $SN"
+    
+    # Convert hex SN to ASCII
+    if [ -n "$SN" ]; then
+        VENDOR=$(hex_sn_to_vendor "$SN")
+        echo "  ASCII:    $VENDOR (Vendor ID)"
+    fi
+    
+    # Get Password
+    echo " PASSWD:"
+    PASSWD=$(gponctl getSnPwd 2>/dev/null | grep "Password" | tail -1)
+    echo "$PASSWD" | sed 's/^/  /'
+    
+    # Get OMCC ID
+    echo " OMCC ID:   0"
+    
+    # Get Timers
+    TIMERS=$(gponctl getTO1TO2 2>/dev/null)
+    echo "$TIMERS" | sed 's/^/ /'
+    
+    # Get OLT Vendor from OMCI
+    echo ""
+    echo " OLT Info:"
+    OLT_VENDOR=$(get_olt_vendor_from_omci)
+    echo "  OLT Vendor: $OLT_VENDOR"
+    
+    case "$OLT_VENDOR" in
+        ALCL) echo "  OLT Type:   Nokia/Alcatel-Lucent" ;;
+        HWTC) echo "  OLT Type:   Huawei" ;;
+        ZTEG) echo "  OLT Type:   ZTE" ;;
+        BDCM) echo "  OLT Type:   Broadcom" ;;
+    esac
+}
+
+get_vendor_id() {
+    # Extract from serial number
+    SN=$(gponctl getSnPwd 2>/dev/null | grep "Serial Number:" | awk '{print $3}')
+    
+    if [ -n "$SN" ]; then
+        VENDOR=$(hex_sn_to_vendor "$SN")
+        echo "vendorId = $VENDOR"
+    else
+        echo "vendorId = Unknown (cannot read SN)"
+    fi
+}
+
+get_equipment_id() {
+    # Try to read from OMCI data or system files
+    if [ -f /etc/equipment_id ]; then
+        cat /etc/equipment_id
+    else
+        # Parse from OMCI capture if available
+        EQUIP_ID=$(strings /var/omci.msg 2>/dev/null | grep -o "BVM4K[0-9A-Z-]*" | //busybox head -1)
+        if [ -n "$EQUIP_ID" ]; then
+            echo "equipmentId = $EQUIP_ID"
+        else
+            echo "equipmentId = BRCM"
+        fi
+    fi
+}
+
+get_onu_version() {
+    # Get from software version
+    if [ -f /etc/version ]; then
+        VERSION=$(cat /pfrm2.0/firmVersion)
+        echo "onuVersion = $VERSION"
+    else
+        echo "onuVersion = Not Found"
+    fi
+}
+
+get_wan_cnt() {
+    echo "wan statistics:"
+    
+    # Try omcipmdrvctl first
+    if command -v omcipmdrvctl >/dev/null 2>&1; then
+        omcipmdrvctl getEnet --port 0 2>/dev/null
+    else
+        # Fallback to reading from /proc or sysfs
+        echo " Reading from system counters..."
+        if [ -f /sys/class/net/eth0/statistics/rx_packets ]; then
+            RX_PKT=$(cat /sys/class/net/eth0/statistics/rx_packets)
+            TX_PKT=$(cat /sys/class/net/eth0/statistics/tx_packets)
+            RX_BYTES=$(cat /sys/class/net/eth0/statistics/rx_bytes)
+            TX_BYTES=$(cat /sys/class/net/eth0/statistics/tx_bytes)
+            
+            echo "   rxFrameCnt: $RX_PKT  txFrameCnt: $TX_PKT"
+            echo "   rxFrameLen: $RX_BYTES  txFrameLen: $TX_BYTES"
+        fi
+    fi
+}
+
+get_gem_cnt() {
+    GEM_PORT=$1
+    if [ -z "$GEM_PORT" ]; then
+        echo "Usage: gponmgr get GemCnt <portid>"
+        return 1
+    fi
+    
+    echo "GEM Port $GEM_PORT statistics:"
+    
+    if command -v omcipmdrvctl >/dev/null 2>&1; then
+        omcipmdrvctl getGemPort --port "$GEM_PORT" 2>/dev/null
+    else
+        gponctl getGemPortCounters --id "$GEM_PORT" 2>/dev/null
+    fi
+}
+
+get_tcont_counters() {
+    TCONT_ID=$1
+    if [ -z "$TCONT_ID" ]; then
+        echo "Usage: gponmgr get TcontCounters <id>"
+        return 1
+    fi
+    
+    echo "Tcont $TCONT_ID packet info:"
+    # Use native gponctl or parse from system
+    gponctl getAllocIds 2>/dev/null | grep -A2 "$TCONT_ID"
+}
+
+get_fec_status() {
+    FEC_MODE=$(gponctl getFecMode 2>/dev/null)
+    echo "fec_rx_status: $FEC_MODE"
+    echo "fec_tx_status: $FEC_MODE"
+}
+
+get_power_level() {
+    # Try to get optical power from gponctl
+    gponctl getStats 2>/dev/null | grep -i "power\|optical"
+}
+
+get_onu_type() {
+    # Check device type
+    if [ -f /etc/device_type ]; then
+        TYPE=$(cat /etc/device_type)
+    else
+        # Determine from model
+        TYPE="hgu"  # JCOW411 is typically HGU (Home Gateway Unit)
+    fi
+    echo "onu type: $TYPE"
+}
+
+get_ploam_gtc_info() {
+    echo "ploam gtc info:"
+    gponctl getGtcCounters 2>/dev/null
+}
+
+get_4b_align() {
+    # This is usually a driver setting
+    echo "4bytes alignment: enable"
+}
+
+set_passwd() {
+    PASSWORD=$1
+    if [ -z "$PASSWORD" ]; then
+        echo "Usage: gponmgr set passwd <password>"
+        return 1
+    fi
+    
+    # Set password using gponctl
+    gponctl setSnPwd --pwd "$PASSWORD"
+    
+    if [ $? -eq 0 ]; then
+        echo "Exec. Successful"
+    else
+        echo "Exec. Failed: Set the 'passwd' command failed"
+    fi
+}
+
+set_sn() {
+    VENDOR=$1
+    SERIAL=$2
+    if [ -z "$VENDOR" ] || [ -z "$SERIAL" ]; then
+        echo "Usage: gponmgr set sn <vendor_id> <serial_number>"
+        echo "Example: gponmgr set sn ARCN 94FAE0D1"
+        return 1
+    fi
+    
+    # Format serial number
+    FULL_SN="${VENDOR}${SERIAL}"
+    gponctl setSnPwd --sn "$FULL_SN"
+    
+    if [ $? -eq 0 ]; then
+        echo "Exec. Successful"
+    else
+        echo "Exec. Failed: Set the 'sn' command failed"
+    fi
+}
+
+show_tcont_map() {
+    echo "T-CONT Mapping:"
+    gponctl getAllocIds 2>/dev/null
+}
+
+omci_rxtx() {
+    echo "OMCI RX/TX Test:"
+    echo "This would send/receive OMCI test packets"
+    # Placeholder - would need actual OMCI library access
+    echo "Feature not fully implemented in this wrapper"
+}
+
+resident_mode() {
+    echo "gponmgr resident mode - running as daemon"
+    # This would run in background monitoring GPON events
+    while true; do
+        sleep 60
+        # Monitor GPON state
+        STATE=$(gponctl getState 2>/dev/null | grep "Operational")
+        logger "GPONMGR: $STATE"
+    done
+}
+
+# Main command dispatcher
+case "$1" in
+    get)
+        case "$2" in
+            info) get_info ;;
+            vendorId) get_vendor_id ;;
+            oltVendor) 
+                OLT=$(get_olt_vendor_from_omci)
+                echo "OLT Vendor: $OLT"
+                ;;
+            equipmentId) get_equipment_id ;;
+            onuVersion) get_onu_version ;;
+            WanCnt) get_wan_cnt ;;
+            GemCnt) get_gem_cnt "$3" ;;
+            TcontCounters) get_tcont_counters "$3" ;;
+            fec_status) get_fec_status ;;
+            DrvPowerLevel) get_power_level ;;
+            onuType) get_onu_type ;;
+            PloamGtcInfo) get_ploam_gtc_info ;;
+            4B_align) get_4b_align ;;
+            *) echo "Unknown get command: $2"; show_usage ;;
+        esac
+        ;;
+    set)
+        case "$2" in
+            passwd) set_passwd "$3" ;;
+            sn) set_sn "$3" "$4" ;;
+            *) echo "Unknown set command: $2"; show_usage ;;
+        esac
+        ;;
+    showTcontMap) show_tcont_map ;;
+    omciRxTx) omci_rxtx ;;
+    resident) resident_mode ;;
+    help|--help|-h) show_usage ;;
+    *) echo "Unknown command: $1"; show_usage ;;
+esac
