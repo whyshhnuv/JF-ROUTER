@@ -4,7 +4,7 @@ This guide is only for educational purposes, I am not responsible for bricked ro
 
 **Keep in mind you are changing commands in root partition, so don't try to experiment without knowing what you are doing as it may brick your router.**
 
-Successfully Tested on JIO JCOW404 ROUTER. 
+Successfully Tested on JF JCOW404 and JCOW411 ONT. 
 
 1.Create your script using telnet and store in a directory.
 
