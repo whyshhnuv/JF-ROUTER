@@ -1,4 +1,4 @@
-# Disable TR-069 [Does Not Work On New Firmwares] </br>
+# Disable TR-069 </br>
 Any Firmware After 2021 is fully dependent on TR069 for essential services like dimclient. Don't disable Tr069 on them or your router will be bricked.
 *Disclaimer: - This is Only for educational purposes, No one is responsible for any type of damage.*
 
