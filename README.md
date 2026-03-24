@@ -59,7 +59,7 @@ It consolidates multiple low-level techniques into a single structured resource.
 
 1. [Decrypt Config File](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Decrypt%20Config%20File.md)
 2. [Get Root Access (Telnet)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT.md)
-3. 7. [Enable Root FTP Access](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Enable%20Root%20FTP%20JF%20Router.md)  
+3. [Enable Root FTP Access](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Enable%20Root%20FTP%20JF%20Router.md)  
 4. [Run Custom Scripts on Router](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md)
 5. [Downgrade Firmware](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Downgrade%20Firmware.md)  
 6. [Disable TR-069](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Disable%20TR-069.md)  
