@@ -1,23 +1,112 @@
-# JF-ROUTER
-TIPS, TRICKS AND HACKS FOR JF ROUTERS <br />
-This repository contains all the files and instructions to customize your JF ONT Gateway. You can find instructions for miscellaneous customizations below. <br />
-All instructions are tested on JCOW404 and JCOW411 <br/>
-# Instuctions:-
+# JF Router Control Toolkit
 
-1.[Decrypt Config file](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Decrypt%20Config%20File.md)
+Advanced modification and control methods for Jio Fiber ONT devices (JCOW404 / JCOW411)
 
-2.[RUN CUSTOM SCRIPTS ON JIO ROUTER](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md)
+---
 
-3.[Disable TR-069](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Disable%20TR-069.md)
+## Overview
+This repository provides tested methods to gain deeper control over JF ONT routers.  
+It consolidates multiple low-level techniques into a single structured resource.
 
-4.[Get Root Access (via Telnet)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT.md)
+---
 
-5.[Way to get any file directly from your Jio Router's Filesystem to your pendrive](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Way%20to%20get%20any%20file%20directly%20from%20your%20Jio%20Router's%20Filesystem%20to%20your%20pendrive.md) [Working as of 3rd January 2023] <br />
+## Capabilities
 
-6.[Downgrade Firmware (At Your Own Risk)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Downgrade%20Firmware.md) 
+### Core Access
+- **Root Access (Telnet)**  
+  Gain full shell access to the device for system-level control.
 
-7.[Enable FTP Server with / as FTP Root](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Enable%20Root%20FTP%20JF%20Router.md)
+- **Decrypt Config File**  
+  Extract and analyze router configuration data.
 
-8.[Run NextDNS (Adblocker) on Router](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20NextDNS.md)
+### System Control
+- **Disable TR-069 (Hard Disable)**  
+  Removes or disables the TR-069 client binary.
 
-More Instructions Coming Soon!
+  **Effect:**
+  - ISP cannot initiate remote management sessions  
+  - Firmware updates via TR-069 are no longer possible  
+  - Remote configuration pushes are blocked  
+
+  **Persistence:**
+  - Remains effective even after firmware downgrade (unless binary is restored)
+
+  **Implication:**
+  - Full local control over device configuration  
+  - No automatic ISP-side recovery or updates  
+
+- **Run Custom Scripts**  
+  Execute persistent scripts to modify router behavior.
+
+### File & Storage Access
+- **Filesystem Extraction to USB**  
+  Copy internal router files directly to external storage.
+
+- **Enable FTP Server (Root Access)**  
+  Access entire filesystem over FTP with `/` as root.
+
+### Firmware Management
+- **Firmware Downgrade (High Risk)**  
+  Revert to older firmware versions for compatibility or exploit access.
+
+### Network Modifications
+- **Run NextDNS (Ad Blocking)**  
+  Apply network-wide DNS-level filtering directly on the router.
+
+---
+
+## Instructions
+
+1. [Decrypt Config File](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Decrypt%20Config%20File.md)  
+2. [Run Custom Scripts on Router](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md)  
+3. [Disable TR-069](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Disable%20TR-069.md)  
+4. [Get Root Access (Telnet)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT.md)  
+5. [Extract Filesystem to USB](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Way%20to%20get%20any%20file%20directly%20from%20your%20Jio%20Router's%20Filesystem%20to%20your%20pendrive.md)  
+6. [Downgrade Firmware](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Downgrade%20Firmware.md)  
+7. [Enable Root FTP Access](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Enable%20Root%20FTP%20JF%20Router.md)  
+8. [Run NextDNS](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20NextDNS.md)  
+
+---
+
+## Scripts
+The `Scripts/` directory contains reusable scripts for:
+- DNS control and overrides  
+- Startup execution hooks  
+- Router behavior modification  
+
+Refer to individual scripts for usage.
+
+---
+
+## Target Devices
+- JCOW404  
+- JCOW411  
+
+---
+
+## Warning
+These methods involve low-level system modifications.
+
+- Incorrect usage may brick your router  
+- Proceed only if you understand the risks  
+- Always keep a recovery option available  
+
+---
+
+## Notes
+- Methods are tested but may break with firmware updates  
+- Some techniques may be patched by ISP updates  
+
+---
+
+## Contribution
+Improvements and additional methods are welcome.
+
+---
+
+## License
+Unlicense
+
+---
+
+If this repository helped you, consider starring it.
