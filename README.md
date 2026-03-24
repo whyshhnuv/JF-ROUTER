@@ -58,7 +58,8 @@ It consolidates multiple low-level techniques into a single structured resource.
 ## Instructions
 
 1. [Decrypt Config File](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Decrypt%20Config%20File.md)  
-2. [Run Custom Scripts on Router](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md)  
+2. [Run Custom Scripts on Router](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md)
+
 3. [Disable TR-069](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Disable%20TR-069.md)  
 4. [Get Root Access (Telnet)](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Get-Root-Access-JF-ONT.md)  
 5. [Extract Filesystem to USB](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Way%20to%20get%20any%20file%20directly%20from%20your%20Jio%20Router's%20Filesystem%20to%20your%20pendrive.md)  
@@ -78,7 +79,7 @@ Refer to individual scripts for usage.
 
 ---
 
-## Target Devices
+## Tested Devices
 - JCOW404  
 - JCOW411  
 
@@ -94,9 +95,7 @@ These methods involve low-level system modifications.
 ---
 
 ## Notes
-- Methods are tested but may break with firmware updates  
-- Some techniques may be patched by ISP updates  
-
+- Methods are tested but may break with firmware updates
 ---
 
 ## Contribution
