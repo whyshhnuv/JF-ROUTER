@@ -46,7 +46,7 @@ It consolidates multiple low-level techniques into a single structured resource.
   Access entire filesystem over FTP with `/` as root.
 
 ### Firmware Management
-- **Firmware Downgrade (High Risk)**  
+- **Firmware Downgrade**  
   Revert to older firmware versions for compatibility or exploit access.
 
 ### Network Modifications
