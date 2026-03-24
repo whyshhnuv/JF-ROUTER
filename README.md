@@ -29,7 +29,7 @@ It consolidates multiple low-level techniques into a single structured resource.
   - Remote configuration pushes are blocked  
 
   **Persistence:**
-  - Remains effective even after firmware downgrade (unless binary is restored)
+  - Remains effective until you manually flash a firmware
 
   **Implication:**
   - Full local control over device configuration  
