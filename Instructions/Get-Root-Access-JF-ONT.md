@@ -20,12 +20,18 @@ config.userdb = {} os.execute("/usr/sbin/utelnetd"); os.execute("/pfrm2.0/bin/ip
 
 5. Ensure there is no line break in the line you just pasted. The whole content should be in a single line and the line should start with `config` otherwise this isn't gonna work.
 
-6. Follow [this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Encrypt-Router-Configuration-File.md) to re-encrypt the configuration file and restore it via the router admin panel.
+6. Change the line with `config.checksum` value to `""`
 
-7. Connect your router via Telnet at port 23 with `root` as user name and `password` as password.
+7. Calculate the new md5 checksum of the file using `certutil -hashfile RSTXXXXXXX_JCXXXXX.txt MD5` [WINDOWS] OR `md5 RSTXXXXXXX_JCXXXXX.txt` [LINUX/MACOS]
 
-8. For newer firmwares, use command `rm /flash/telnetDisable` to keep Telnet enabled. (Otherwise it will be disabled after some time).
+8. Change `config.checksum` to the new md5 checksum value.
+
+9. Follow [this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Encrypt-Router-Configuration-File.md) to re-encrypt the configuration file and restore it via the router admin panel.
+
+10. Connect your router via Telnet at port 23 with `root` as user name and `password` as password.
+
+11. For newer firmwares, use command `rm /flash/telnetDisable` to keep Telnet enabled. (Otherwise it will be disabled after some time).
 Otherwise, on older firmwares use command `touch /tmp/DEBUG_IMAGE` to keep Telnet enabled. (Otherwise it will be disabled after some time).
 
-9.Bonus Tip: To keep telnet enabled use [this script](https://github.com/Naitik1208/JF-ROUTER/blob/main/Scripts/service.sh#L20) Store it on your router and add it to the rcS file as mentioned in [this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md).
+12.Bonus Tip: To keep telnet enabled use [this script](https://github.com/Naitik1208/JF-ROUTER/blob/main/Scripts/service.sh#L20) Store it on your router and add it to the rcS file as mentioned in [this guide](https://github.com/Naitik1208/JF-ROUTER/blob/main/Instructions/Run%20Custom%20Scripts%20On%20Your%20Router.md).
 **Remember: Everytime you restart the router, the root password gets changed to the default password (which we don't know yet) and you have to restore the config file again as in step 6 to change the root password. Step 8 will keep your telnet enabled across router restarts.**
